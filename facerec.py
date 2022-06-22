@@ -1,26 +1,25 @@
 import face_recognition
 import cv2
 
-img = cv2.imread("msd.jpeg")
-#rgb_img = cv2.cvtColor(img2, cv2.COLOR_BAYER_BRG2RGB)
-img_encoding = face_recognition.face_encodings(img)[0]
+def faceEncoding(filedir):
+    img = cv2.imread(filedir)
+    img_encoding = face_recognition.face_encodings(img)[0]
+    # cv2.imshow("Img",img)
+    # cv2.waitKey(0)
+    return img_encoding
 
-img2 = cv2.imread("msd1.jpg")
-#rgb_img = cv2.cvtColor(img2, cv2.COLOR_BAYER_BRG2RGB)
-img_encoding2 = face_recognition.face_encodings(img2)[0]
-
-img3 = cv2.imread("actor.jpg")
-#rgb_img = cv2.cvtColor(img2, cv2.COLOR_BAYER_BRG2RGB)
-img_encoding3 = face_recognition.face_encodings(img3)[0]
+def facecomapre(encoded, encoded1):
+    img_compare = face_recognition.compare_faces([encoded], encoded1)
+    return img_compare
 
 
-img_compare1 = face_recognition.compare_faces([img_encoding], img_encoding2)
-print("Result : ", img_compare1)
+img1 = 'images/msd.jpeg'
+img2 = 'images/msd1.jpg'
+img3 = 'images/actor.jpg'
+fcE1 = faceEncoding(img1)
+fcE2 = faceEncoding(img2)
+fcE3 = faceEncoding(img3)
 
-img_compare2 = face_recognition.compare_faces([img_encoding], img_encoding3)
-print("Result : ", img_compare2)
-
-cv2.imshow("Img",img)
-cv2.imshow("Img1", img2)
-cv2.imshow("Img3", img3)
-cv2.waitKey(0)
+print(facecomapre(fcE1, fcE2))
+print(facecomapre(fcE2,fcE3))
+print(facecomapre(fcE2, fcE1))
